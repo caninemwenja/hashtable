@@ -41,22 +41,28 @@ static void destroy_node(HashNode *node){
 HashTable* hashtable_init(uint32_t (*fn) (const char*)){
     uint32_t num_entries, i;
     HashTable* hashtable;
+    HashNode** nodes;
 
     if(fn == NULL){
         fn = simple_hash;
     }
 
     num_entries = fn(NULL);
-    hashtable = (HashTable*) malloc(
-        sizeof(HashTable) + num_entries * sizeof(HashNode*));
+    hashtable = (HashTable*) malloc(sizeof(HashTable));
     if (hashtable == NULL){
+        return NULL;
+    }
+
+    nodes = (HashNode**) malloc(num_entries * sizeof(HashNode*));
+    if(nodes == NULL){
         return NULL;
     }
 
     hashtable->fn = fn;
     for(i=0; i < num_entries; i++){
-        hashtable->nodes[i] = NULL;
+        nodes[i] = NULL;
     }
+    hashtable->nodes = nodes;
 
     return hashtable;
 }
@@ -73,6 +79,7 @@ void hashtable_destroy(HashTable* hashtable){
             current = next;
         }
     }
+    free(hashtable->nodes);
     free(hashtable);
 }
 

@@ -1,5 +1,5 @@
-TARGET=hasher
-DEBUG_TARGET=hasher_dbg
+TARGET=hashtest
+DEBUG_TARGET=hashtest_dbg
 CC=gcc
 CFLAGS=-O2 -W -Wall -pedantic
 DEBUGFLAGS=-ggdb

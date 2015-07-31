@@ -11,7 +11,7 @@ typedef struct HashNode_s {
 
 typedef struct HashTable_s {
     size_t (*fn) (const char*);
-    HashNode* nodes[];
+    HashNode** nodes;
 } HashTable;
 
 HashTable* hashtable_init(uint32_t(*)(const char*));
