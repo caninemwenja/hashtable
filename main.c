@@ -20,6 +20,16 @@ int main(){
     data = hashtable_get(hashtable, "age");
     printf("Retrieved age: %i.\n", *(int *)data);
 
+    hashtable_del(hashtable, "name");
+
+    data = hashtable_get(hashtable, "name");
+    if(data == NULL){
+        printf("Delete worked.\n");
+    }
+    else{
+        printf("Delete didnt work.\n");
+    }
+
     hashtable_destroy(hashtable);
 
     return 0;
