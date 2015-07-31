@@ -4,17 +4,23 @@
 
 #include "hash.h"
 
-/* simple_hash borrowed from http://powerfield-software.com/?p=615 */
+/* simple_hash borrowed from http://powerfield-software.com/?p=1240
+ * after the license notice the addendum of
+ * http://powerfield-software.com/?p=615 
+ */
 static uint32_t simple_hash(const char * key){
-    uint32_t hashval;
-    static uint32_t HASH_SIZE = 101;
+    uint32_t hashval, add;
 
-    if(key == NULL) return HASH_SIZE;
+    static int HASHSZ = 251;
+    if (key == NULL) return HASHSZ;
 
-    for(hashval=0; *key != '\0'; key++){
-        hashval = (uint32_t)(*key) + 31 * hashval;
+    hashval = 0xdeadbeef, add = 0;
+    while (*key != '\0') {
+        hashval = (hashval << 3) + add + (uint32_t)(*key);
+        add = (add + 1) % 13;
+        key++;
     }
-    return hashval % HASH_SIZE;
+    return hashval % HASHSZ;
 }
 
 static void locate(HashTable* hashtable, const char* key, uint32_t* index, HashNode** prev, HashNode** node){
