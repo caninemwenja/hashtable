@@ -4,7 +4,7 @@
 
 #include "hash.h"
 
-
+/* simple_hash borrowed from http://powerfield-software.com/?p=615 */
 static uint32_t simple_hash(const char * key){
     uint32_t hashval;
     static uint32_t HASH_SIZE = 101;
