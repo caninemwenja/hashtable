@@ -93,12 +93,15 @@ void* hashtable_get(HashTable* hashtable, const char* key){
 }
 
 
-void hashtable_set(HashTable* hashtable, const char* key, void* value){
+int hashtable_set(HashTable* hashtable, const char* key, void* value){
     HashNode *node, *prev;
     uint32_t index;
     locate(hashtable, key, &index, &prev, &node);
     if(node == NULL){
         node = (HashNode *) malloc(sizeof(HashNode));
+        if(node == NULL){
+            return 1;
+        }
         node->key = (char *) key;
         node->value = value;
         node->next = NULL;
@@ -112,6 +115,7 @@ void hashtable_set(HashTable* hashtable, const char* key, void* value){
     else {
         node->value = value;
     }
+    return 0;
 }
 
 

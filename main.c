@@ -4,30 +4,49 @@
 int main(){
     HashTable* hashtable;
     char c;
-    int a;
+    int a, res;
     void* data;
 
     c = 'k';
     a = 24;
 
     hashtable = hashtable_init(NULL);
-    hashtable_set(hashtable, "name", &c);
-    hashtable_set(hashtable, "age", &a);
+    if(hashtable == NULL){
+        printf("Init did not work.\n");
+        return 1;
+    }
 
-    data = hashtable_get(hashtable, "name");
-    printf("Retrieved name: %c.\n", *(char *)data);
+    res = hashtable_set(hashtable, "name", &c);
+    if(res != 0){
+        printf("Set 'name' did not work.\n");
+        return 1;
+    }
 
-    data = hashtable_get(hashtable, "age");
-    printf("Retrieved age: %i.\n", *(int *)data);
-
-    hashtable_del(hashtable, "name");
+    res = hashtable_set(hashtable, "age", &a);
+    if(res != 0){
+        printf("Set 'age' did not work.\n");
+        return 1;
+    }
 
     data = hashtable_get(hashtable, "name");
     if(data == NULL){
-        printf("Delete worked.\n");
+        printf("Get 'name' did not work.\n");
+        return 1;
     }
-    else{
+    printf("Retrieved name: %c.\n", *(char *)data);
+
+    data = hashtable_get(hashtable, "age");
+    if(data == NULL){
+        printf("Get 'age' did not work.\n");
+        return 1;
+    }
+    printf("Retrieved age: %i.\n", *(int *)data);
+
+    hashtable_del(hashtable, "name");
+    data = hashtable_get(hashtable, "name");
+    if(data != NULL){
         printf("Delete didnt work.\n");
+        return 1;
     }
 
     hashtable_destroy(hashtable);

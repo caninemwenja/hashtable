@@ -17,7 +17,7 @@ typedef struct HashTable_s {
 HashTable* hashtable_init(uint32_t(*)(const char*));
 void hashtable_destroy(HashTable*);
 
-void hashtable_set(HashTable*, const char*, void*);
+int hashtable_set(HashTable*, const char*, void*);
 void* hashtable_get(HashTable*, const char*);
 void hashtable_del(HashTable*, const char*);
 
