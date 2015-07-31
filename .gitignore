@@ -1,0 +1,3 @@
+*.o
+hasher
+hasher_dbg
